@@ -1,4 +1,4 @@
-package com.team5.pirategame;
+package com.yorkpirates.game;
 
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;

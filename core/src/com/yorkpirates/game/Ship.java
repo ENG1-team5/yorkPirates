@@ -1,4 +1,4 @@
-package com.team5.pirategame;
+package com.yorkpirates.game;
 
 abstract class Ship extends DynamicObject {
 

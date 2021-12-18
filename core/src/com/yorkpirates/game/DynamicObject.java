@@ -1,6 +1,4 @@
-package com.team5.pirategame;
-
-
+package com.yorkpirates.game;
 
 abstract class DynamicObject extends StaticObject{
     float speed = 1;
