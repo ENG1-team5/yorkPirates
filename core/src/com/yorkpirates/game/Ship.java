@@ -4,7 +4,7 @@ abstract class Ship extends DynamicObject {
 
     Integer Health = 500; //default placeholder value for health
 
-    public Ship(String imgName, Integer xPos, Integer yPos){
+    public Ship(String imgName, Float xPos, Float yPos){
         super(imgName, xPos, yPos);
     }
 
@@ -13,7 +13,7 @@ abstract class Ship extends DynamicObject {
     }
 
     public void moveForward(){
-
+        
     }
 
     public void moveBackward(){

@@ -8,9 +8,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class YorkPirates extends ApplicationAdapter {
 
-
 	Stage stage;
-	
+
 	// Create is run when the game is launched
 	@Override
 	public void create () {
@@ -19,11 +18,10 @@ public class YorkPirates extends ApplicationAdapter {
 		stage = new Stage(new ScreenViewport()); // Creates a stage the size of our screen
 		Gdx.input.setInputProcessor(stage); // Wires up the stage as our input processor
 		
-		StaticObject pShip = new PlayerShip("ship.png",100,100);
+		StaticObject pShip = new PlayerShip("ship.png", 100f, 100f);
 		stage.addActor(pShip);
 		stage.setKeyboardFocus(pShip);
 	}
-
 
 	// Render is ran every frame of the game
 	@Override

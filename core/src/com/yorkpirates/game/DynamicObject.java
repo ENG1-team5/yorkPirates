@@ -1,16 +1,25 @@
 package com.yorkpirates.game;
 
-abstract class DynamicObject extends StaticObject{
-    float speed = 1;
-    float rotationSpeed = 1;
+import com.badlogic.gdx.math.MathUtils;
 
-    public DynamicObject(String imgName, Integer xPos, Integer yPos){
+abstract class DynamicObject extends StaticObject{
+    Float speed = 0f;
+
+    public DynamicObject(String imgName, Float xPos, Float yPos){
         super(imgName, xPos, yPos);
         // TO DO
     }
+
     @Override
     protected void positionChanged(){
         sprite.setPosition(getX(), getY());
+    }
+
+    @Override
+    public void act(float delta){
+        super.act(delta);
+        setX(getX() + MathUtils.cosDeg(getRotation()) * speed);
+        setY(getY() + MathUtils.sinDeg(getRotation()) * speed);
     }
     
 }
