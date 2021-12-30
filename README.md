@@ -1,7 +1,9 @@
 # How to work on this repo
 
 0. Install Temurin 11 from https://adoptium.net/
-    
+
+    Ignore this step if you have Java installed.
+
     If you get an issue similar to `Incompatable major version 61` then you need to make sure that you installed Temurin 11
 
 1. Pull this repository using:
@@ -18,4 +20,4 @@
 
     `gradlew.bat desktop:run`
 
-5. Commit and push your changes. I reccomend using VSCode or some other git assistant
+5. Commit and push your changes. I reccomend using VSCode or some other git assistan
