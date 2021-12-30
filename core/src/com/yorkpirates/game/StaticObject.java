@@ -20,11 +20,13 @@ abstract class StaticObject extends Actor{
         setY(yPos); 
     }
 
+    // Redraws the object every frame, I think.
     @Override
     public void draw(Batch batch, float parentAlpha){
         batch.draw(sprite, getX(), getY(), getOriginX(), getOriginY(), sprite.getRegionWidth(), sprite.getRegionHeight(), getScaleX(), getScaleY(), getRotation());
     }
 
+    // Called each frame
     @Override
     public void act(float delta){
         super.act(delta);

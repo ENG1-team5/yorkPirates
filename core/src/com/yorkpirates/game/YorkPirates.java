@@ -11,6 +11,7 @@ public class YorkPirates extends ApplicationAdapter {
 
 	Stage stage;
 	
+	// Create is run when the game is launched
 	@Override
 	public void create () {
 		// Stage acts as a container for actors, holding the references for them that can be collected
@@ -23,6 +24,8 @@ public class YorkPirates extends ApplicationAdapter {
 		stage.setKeyboardFocus(pShip);
 	}
 
+
+	// Render is ran every frame of the game
 	@Override
 	public void render () {
 		ScreenUtils.clear(1, 1, 1, 1); // Sets background to white

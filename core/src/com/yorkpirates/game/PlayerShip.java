@@ -17,6 +17,7 @@ public class PlayerShip extends Ship{
         //addListener(new PlayerListener());
     }
 
+    // Called each frame
     @Override
     public void act(float delta){
         // Placeholder functions for movement
@@ -36,7 +37,7 @@ public class PlayerShip extends Ship{
 
     }
 
-    // Unused --
+    // Did not work very well at all...
     // private class PlayerListener extends InputListener {
     //     @Override
     //     public boolean keyDown(InputEvent event, int keycode){
