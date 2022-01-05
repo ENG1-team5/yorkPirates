@@ -1,12 +1,5 @@
 package com.yorkpirates.game;
 
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Gdx;
 
@@ -46,5 +39,11 @@ public class PlayerShip extends Ship{
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) | Gdx.input.isKeyPressed(Input.Keys.D)) {
             rotateBy(-turnSpeed);
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) | Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+            System.out.println(Gdx.input.getX() * 1f);
+            System.out.println(Gdx.input.getY() * 1f);
+            Fire(Gdx.input.getX() * 1f, Gdx.input.getY() * 1f);
+        }
     }
+    
 }

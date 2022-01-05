@@ -5,11 +5,11 @@ import com.badlogic.gdx.math.MathUtils;
 
 public class CannonBall extends DynamicObject{
 
-    public CannonBall(String imgName, Float xPos, Float yPos){
-        super(imgName, xPos, yPos);
+    public CannonBall(String imgName, Float startX, Float startY, Float targetX, Float targetY){
+        super(imgName, startX, startY);
 
-        // Point the cannonball towards the mouse pointer
-        double angle = 180 / MathUtils.PI * MathUtils.atan2(yPos - Gdx.input.getY(), xPos - Gdx.input.getX());
+        // Point the cannonball towards target x,y
+        double angle = 180 / MathUtils.PI * MathUtils.atan2(startY - targetY, startX - targetX);
         setRotation((float) angle);
 
         speed = 1f;

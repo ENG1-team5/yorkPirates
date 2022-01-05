@@ -1,5 +1,6 @@
 package com.yorkpirates.game;
 
+
 abstract class Ship extends DynamicObject {
 
     Integer Health = 500; //default placeholder value for health
@@ -8,8 +9,9 @@ abstract class Ship extends DynamicObject {
         super(imgName, xPos, yPos);
     }
 
-    public void Fire(){
-
+    public void Fire(Float xCoord, Float yCoord){
+        CannonBall cb = new CannonBall("cannonball.png", getX(), getY(), xCoord, yCoord);
+        getStage().addActor(cb);    
     }
 
     public void moveForward(){
