@@ -10,7 +10,7 @@ abstract class Ship extends DynamicObject {
     }
 
     public void Fire(Float xCoord, Float yCoord){
-        CannonBall cb = new CannonBall("cannonball.png", getX(), getY(), xCoord, yCoord);
+        CannonBall cb = new CannonBall("cannonball.png", getX()+getWidth()/2, getY()+getHeight()/2, xCoord, yCoord);
         getStage().addActor(cb);    
     }
 

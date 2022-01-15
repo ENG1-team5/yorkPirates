@@ -1,17 +1,18 @@
 package com.yorkpirates.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 
 public class CannonBall extends DynamicObject{
 
     public CannonBall(String imgName, Float startX, Float startY, Float targetX, Float targetY){
         super(imgName, startX, startY);
 
-        // Point the cannonball towards target x,y
-        double angle = 180 / MathUtils.PI * MathUtils.atan2(startY - targetY, startX - targetX);
+        double angle = 180 / MathUtils.PI * MathUtils.atan2(targetY - startY, targetX - startX);
         setRotation((float) angle);
-
+        //setX(getX()-getWidth());
+        //setY(getY()-getHeight());
+        
         speed = 1f;
     }
 
