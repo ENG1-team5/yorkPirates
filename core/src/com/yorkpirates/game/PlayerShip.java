@@ -2,20 +2,17 @@ package com.yorkpirates.game;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+
 import com.badlogic.gdx.Gdx;
 
 public class PlayerShip extends Ship{
 
     Float maxSpeed = 3f;
     Float acceleration = 1f;
-    Float turnSpeed = 1f;
+    Float turnSpeed = 2f;
 
     public PlayerShip(String imgName, Float xPos, Float yPos){
         super(imgName, xPos, yPos);
-        //setTouchable(Touchable.enabled);
-
-        //addListener(new PlayerListener());
     }
 
     // Called each frame
