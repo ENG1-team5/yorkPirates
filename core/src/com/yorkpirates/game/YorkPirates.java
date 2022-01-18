@@ -17,7 +17,7 @@ public class YorkPirates extends ApplicationAdapter {
 		// Stage acts as a container for actors, holding the references for them that can be collected with stage.getActors()
 		stage = new Stage(new ScreenViewport()); // Creates a stage the size of our screen
 		Gdx.input.setInputProcessor(stage); // Wires up the stage as our input processor
-		
+		System.out.println(stage.getHeight() + "" + stage.getWidth());
 		//Changing cursor image
 		Pixmap pm = new Pixmap(Gdx.files.internal("reticle.png"));
 		Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, pm.getWidth()/2, pm.getHeight()/2)); //0,0 is the tip of the cursor on the image

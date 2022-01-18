@@ -38,24 +38,26 @@ public class CannonBall extends DynamicObject{
         if (TimeUtils.timeSinceMillis(timeFired) > timeToLive){
             explode(); //Removes cannonball from stage
         }
-        Array<Actor> actors = getStage().getActors();
-
-        for (int i = 0; i < actors.size; i++){
-            // Bullet is owned by player and has hit EnemyShip
-            if (actors.get(i) instanceof EnemyShip && Owner instanceof PlayerShip){
-                EnemyShip eShip = (EnemyShip) actors.get(i);
-                if (collisionBox.overlaps(eShip.collisionBox)){
-                    eShip.Hit();
-                    explode();
+        else{
+            Array<Actor> actors = getStage().getActors();
+    
+            for (int i = 0; i < actors.size; i++){
+                // Bullet is owned by player and has hit EnemyShip
+                if (actors.get(i) instanceof EnemyShip && Owner instanceof PlayerShip){
+                    EnemyShip eShip = (EnemyShip) actors.get(i);
+                    if (collisionBox.overlaps(eShip.collisionBox)){
+                        eShip.Hit();
+                        explode();
+                    }
                 }
-            }
-            if (actors.get(i) instanceof PlayerShip && Owner instanceof EnemyShip){
-                PlayerShip pShip = (PlayerShip) actors.get(i);
-                if (collisionBox.overlaps(pShip.collisionBox)){
-                    pShip.Hit();
-                    explode();
+                if (actors.get(i) instanceof PlayerShip && Owner instanceof EnemyShip){
+                    PlayerShip pShip = (PlayerShip) actors.get(i);
+                    if (collisionBox.overlaps(pShip.collisionBox)){
+                        pShip.Hit();
+                        explode();
+                    }
                 }
-            }
-        }   
+            }  
+        } 
     }
 }
