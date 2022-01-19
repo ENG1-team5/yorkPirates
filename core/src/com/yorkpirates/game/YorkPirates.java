@@ -1,10 +1,7 @@
 package com.yorkpirates.game;
 
-import javax.swing.text.View;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -13,12 +10,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class YorkPirates extends ApplicationAdapter {
 
 	Stage stage;
+	TiledMap map;
 	OrthographicCamera orthoCam;
 	OrthogonalTiledMapRenderer tiledMapRenderer;
 
@@ -42,8 +39,8 @@ public class YorkPirates extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(stage); // Wires up the stage as our input processor
 
 		// Load tiled map
-		// TiledMap map = new TmxMapLoader().load("placeholder.tmx");
-		// tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+		map = new TmxMapLoader().load("placeholder.tmx");
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
 		// System.out.println(stage.getHeight() + "" + stage.getWidth());
 
@@ -64,15 +61,17 @@ public class YorkPirates extends ApplicationAdapter {
 	// Render is ran every frame of the game
 	@Override
 	public void render () {
-		orthoCam.position.set(pShip.getX(), pShip.getY(), 1f);
+		orthoCam.position.set(pShip.getX(), pShip.getY(), 16f);
 		orthoCam.update();
 
-		// tiledMapRenderer.setView(orthoCam);
-		// tiledMapRenderer.render();
+		ScreenUtils.clear(0.5f, 0.5f, 0.5f, 1); // Sets background to white
 
-		// ScreenUtils.clear(1, 1, 1, 1); // Sets background to white
+		tiledMapRenderer.setView(orthoCam);
+		tiledMapRenderer.render();
+
 		stage.act(Gdx.graphics.getDeltaTime()); // Runs the act function for all objects in stage, passes in amount of time since last frame
 		stage.draw();
+
 	}
 
 	@Override
