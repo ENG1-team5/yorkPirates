@@ -4,9 +4,11 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -48,14 +50,19 @@ public class YorkPirates extends ApplicationAdapter {
 		stage = new Stage(viewport); // Creates a stage the size of our screen
 		Gdx.input.setInputProcessor(stage); // Wires up the stage as our input processor
 
-		System.out.println(stage.getHeight() + " " + stage.getWidth());
+		// System.out.println(stage.getHeight() + " " + stage.getWidth());
 
 		// Changing cursor image
 		Pixmap pm = new Pixmap(Gdx.files.internal("reticle.png"));
 		Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, pm.getWidth()/2, pm.getHeight()/2)); //0,0 is the tip of the cursor on the image
 		pm.dispose();
 
-		pShip = new PlayerShip("ship.png", 100f, 100f);
+		// Spawn some actors
+		MapLayer spawns = map.getLayers().get("spawns");
+
+		// Add player ship
+		RectangleMapObject spawn = (RectangleMapObject)spawns.getObjects().get("player_spawn");
+		pShip = new PlayerShip("ship.png", spawn.getRectangle().x, spawn.getRectangle().y);
 		stage.addActor(pShip);
 		stage.setKeyboardFocus(pShip);
 
