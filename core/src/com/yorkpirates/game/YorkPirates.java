@@ -1,29 +1,58 @@
 package com.yorkpirates.game;
 
+import javax.swing.text.View;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class YorkPirates extends ApplicationAdapter {
 
 	Stage stage;
+	OrthographicCamera orthoCam;
+	OrthogonalTiledMapRenderer tiledMapRenderer;
+
+	// The player ship
+	// Unsure if this is a good idea but need to keep it around
+	// So we can set the orthoCam position to its position
+	StaticObject pShip;
 
 	// Create is run when the game is launched
 	@Override
 	public void create () {
+		// Create and set up orthographic camera
+		orthoCam = new OrthographicCamera();
+		orthoCam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+		Viewport viewport = new FitViewport(orthoCam.viewportWidth, orthoCam.viewportHeight, orthoCam);
+
 		// Stage acts as a container for actors, holding the references for them that can be collected with stage.getActors()
-		stage = new Stage(new ScreenViewport()); // Creates a stage the size of our screen
+		// stage = new Stage(new ScreenViewport()); // Creates a stage the size of our screen
+		stage = new Stage(viewport); // Creates a stage the size of our screen
 		Gdx.input.setInputProcessor(stage); // Wires up the stage as our input processor
-		System.out.println(stage.getHeight() + "" + stage.getWidth());
-		//Changing cursor image
+
+		// Load tiled map
+		// TiledMap map = new TmxMapLoader().load("placeholder.tmx");
+		// tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+
+		// System.out.println(stage.getHeight() + "" + stage.getWidth());
+
+		// Changing cursor image
 		Pixmap pm = new Pixmap(Gdx.files.internal("reticle.png"));
 		Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, pm.getWidth()/2, pm.getHeight()/2)); //0,0 is the tip of the cursor on the image
 		pm.dispose();
 
-		StaticObject pShip = new PlayerShip("ship.png", 100f, 100f);
+		pShip = new PlayerShip("ship.png", 100f, 100f);
 		stage.addActor(pShip);
 		stage.setKeyboardFocus(pShip);
 
@@ -35,7 +64,13 @@ public class YorkPirates extends ApplicationAdapter {
 	// Render is ran every frame of the game
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 1, 1, 1); // Sets background to white
+		orthoCam.position.set(pShip.getX(), pShip.getY(), 1f);
+		orthoCam.update();
+
+		// tiledMapRenderer.setView(orthoCam);
+		// tiledMapRenderer.render();
+
+		// ScreenUtils.clear(1, 1, 1, 1); // Sets background to white
 		stage.act(Gdx.graphics.getDeltaTime()); // Runs the act function for all objects in stage, passes in amount of time since last frame
 		stage.draw();
 	}
