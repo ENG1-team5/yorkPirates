@@ -4,7 +4,9 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,7 +18,7 @@ public class YorkPirates extends ApplicationAdapter {
 
 	Stage stage;
 	TiledMap map;
-	OrthographicCamera orthoCam;
+	OrthographicCamera camera;
 	OrthogonalTiledMapRenderer tiledMapRenderer;
 
 	// The player ship
@@ -27,22 +29,26 @@ public class YorkPirates extends ApplicationAdapter {
 	// Create is run when the game is launched
 	@Override
 	public void create () {
-		// Create and set up orthographic camera
-		orthoCam = new OrthographicCamera();
-		orthoCam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-		Viewport viewport = new FitViewport(orthoCam.viewportWidth, orthoCam.viewportHeight, orthoCam);
-
-		// Stage acts as a container for actors, holding the references for them that can be collected with stage.getActors()
-		// stage = new Stage(new ScreenViewport()); // Creates a stage the size of our screen
-		stage = new Stage(viewport); // Creates a stage the size of our screen
-		Gdx.input.setInputProcessor(stage); // Wires up the stage as our input processor
-
 		// Load tiled map
 		map = new TmxMapLoader().load("placeholder.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
-		// System.out.println(stage.getHeight() + "" + stage.getWidth());
+		// Get width and height
+		// width and height are in units (== tiles), tilewidth and tileheight are pixels per unit (== pixels per tile)
+		MapProperties prop = map.getProperties();
+		Integer mapWidth = prop.get("width", Integer.class) * prop.get("tilewidth", Integer.class);
+		Integer mapHeight = prop.get("height", Integer.class) * prop.get("tileheight", Integer.class);
+
+		// Create and set up orthographic camera
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Viewport viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+
+		// Stage acts as a container for actors, holding the references for them that can be collected with stage.getActors()
+		stage = new Stage(viewport); // Creates a stage the size of our screen
+		Gdx.input.setInputProcessor(stage); // Wires up the stage as our input processor
+
+		// System.out.println(stage.getHeight() + " " + stage.getWidth());
 
 		// Changing cursor image
 		Pixmap pm = new Pixmap(Gdx.files.internal("reticle.png"));
@@ -61,22 +67,27 @@ public class YorkPirates extends ApplicationAdapter {
 	// Render is ran every frame of the game
 	@Override
 	public void render () {
-		orthoCam.position.set(pShip.getX(), pShip.getY(), 16f);
-		orthoCam.update();
+		camera.position.set(pShip.getX(), pShip.getY(), 16f);
+		camera.update();
 
 		ScreenUtils.clear(0.5f, 0.5f, 0.5f, 1); // Sets background to white
 
-		tiledMapRenderer.setView(orthoCam);
+		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
 
 		stage.act(Gdx.graphics.getDeltaTime()); // Runs the act function for all objects in stage, passes in amount of time since last frame
 		stage.draw();
-
 	}
 
 	@Override
 	public void dispose(){
 		
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		camera.viewportWidth = width;
+		camera.viewportHeight = height;
 	}
 	
 }

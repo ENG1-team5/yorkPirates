@@ -46,5 +46,4 @@ public class PlayerShip extends Ship{
             Fire(target.x, target.y);
         }
     }
-    
 }
