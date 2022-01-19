@@ -25,8 +25,8 @@ abstract class DynamicObject extends StaticObject{
         float newX = oldX + MathUtils.cosDeg(getRotation()) * speed;
         float newY = oldY + MathUtils.sinDeg(getRotation()) * speed;
 
-        if (newX < 0 || 3200 < newX) { newX = oldX; }
-        if (newY < 0 || 3200 < newY) { newY = oldY; }
+        if (newX < 0 || getStage().getHeight() < newX) { newX = oldX; }
+        if (newY < 0 || getStage().getWidth() < newY) { newY = oldY; }
 
         setX(newX);
         setY(newY);

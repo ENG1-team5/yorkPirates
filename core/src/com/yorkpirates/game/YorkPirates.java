@@ -41,14 +41,14 @@ public class YorkPirates extends ApplicationAdapter {
 
 		// Create and set up orthographic camera
 		camera = new OrthographicCamera();
+		Viewport viewport = new FitViewport(mapWidth, mapHeight, camera);
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		Viewport viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
 		// Stage acts as a container for actors, holding the references for them that can be collected with stage.getActors()
 		stage = new Stage(viewport); // Creates a stage the size of our screen
 		Gdx.input.setInputProcessor(stage); // Wires up the stage as our input processor
 
-		// System.out.println(stage.getHeight() + " " + stage.getWidth());
+		System.out.println(stage.getHeight() + " " + stage.getWidth());
 
 		// Changing cursor image
 		Pixmap pm = new Pixmap(Gdx.files.internal("reticle.png"));
@@ -89,5 +89,4 @@ public class YorkPirates extends ApplicationAdapter {
 		camera.viewportWidth = width;
 		camera.viewportHeight = height;
 	}
-	
 }
