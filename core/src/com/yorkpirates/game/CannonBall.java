@@ -11,7 +11,6 @@ public class CannonBall extends DynamicObject{
     long timeFired;
     Integer damage = 10; // 10 HP damage 
     Ship Owner;
-    
 
     public CannonBall(String imgName, Float startX, Float startY, Float targetX, Float targetY,Ship Owner){
         super(imgName, startX, startY);
@@ -19,10 +18,10 @@ public class CannonBall extends DynamicObject{
         setX(getX() - getWidth()/2); // Changes the start location to the center of the ship
         setY(getY() - getHeight()/2);
 
-        double angle = 180 / MathUtils.PI * MathUtils.atan2((targetY-getHeight()/2) - startY, (targetX-getWidth()/2) - startX);
+        double angle = 180 / MathUtils.PI * MathUtils.atan2((targetY+(getHeight()/2)) - startY, (targetX+(getWidth()/2)) - startX);
         setRotation((float) angle);
 
-        speed = 3f;
+        speed = 7f + Owner.speed;
 
         timeFired = TimeUtils.millis();
     }
@@ -30,7 +29,6 @@ public class CannonBall extends DynamicObject{
     public void explode(){
         remove();
     }
-
     // Anything in here is ran every frame the object is alive
     @Override
     public void act(float delta){

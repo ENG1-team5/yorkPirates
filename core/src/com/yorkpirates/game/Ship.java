@@ -19,7 +19,7 @@ abstract class Ship extends DynamicObject {
     public void Fire(Float xCoord, Float yCoord){
         if (TimeUtils.timeSinceMillis(lastFiredTime) > shootingCooldown){
             lastFiredTime = TimeUtils.millis();
-            CannonBall cb = new CannonBall("cannonball.png", getX()+getWidth()/2, getY()+getHeight()/2, xCoord, yCoord,this); // "this" is a reference to this object used for hitreg
+            CannonBall cb = new CannonBall("cannonball.png", getX()+(getWidth()/2), getY()+(getHeight()/2), xCoord, yCoord,this); // "this" is a reference to this object used for hitreg
             cannonBalls.add(cb);
             getStage().addActor(cb);    
         }

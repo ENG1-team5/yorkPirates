@@ -54,7 +54,7 @@ public class YorkPirates extends ApplicationAdapter {
 
 		// Changing cursor image
 		Pixmap pm = new Pixmap(Gdx.files.internal("reticle.png"));
-		Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, pm.getWidth()/2, pm.getHeight()/2)); //0,0 is the tip of the cursor on the image
+		Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm,pm.getWidth()/2,pm.getHeight()/2)); 
 		pm.dispose();
 
 		// Spawn some actors
