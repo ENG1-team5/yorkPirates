@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="12">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="15">
  <tileset firstgid="1" source="tilesets/water.tsx"/>
  <tileset firstgid="5" source="tilesets/building.tsx"/>
  <layer id="1" name="bkg" width="100" height="100">
@@ -108,6 +108,12 @@
  </layer>
  <objectgroup id="7" name="spawns">
   <object id="9" name="player_spawn" x="79.3333" y="3086.67">
+   <point/>
+  </object>
+  <object id="12" name="enemy_spawn" x="208" y="2932.67">
+   <point/>
+  </object>
+  <object id="13" name="enemy_spawn" x="76.6667" y="2764.67">
    <point/>
   </object>
  </objectgroup>

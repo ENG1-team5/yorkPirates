@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -61,14 +62,22 @@ public class YorkPirates extends ApplicationAdapter {
 		MapLayer spawns = map.getLayers().get("spawns");
 
 		// Add player ship
+		// Seperate as a player ship must be spawned for the camera to work
 		RectangleMapObject spawn = (RectangleMapObject)spawns.getObjects().get("player_spawn");
 		pShip = new PlayerShip("ship.png", spawn.getRectangle().x, spawn.getRectangle().y);
 		stage.addActor(pShip);
 		stage.setKeyboardFocus(pShip);
 
-		// For testing collision - please remove
-		EnemyShip eShip = new EnemyShip("ship.png", 300f, 300f);
-		stage.addActor(eShip);
+		// Spawn other 
+		for (MapObject sp : spawns.getObjects()) {
+			// System.out.println(sp.getName());
+			if (sp.getName().contains("enemy_spawn")) {
+				System.out.println("Spawing enemy");
+				Rectangle _sp = ((RectangleMapObject)sp).getRectangle();
+				EnemyShip eShip = new EnemyShip("ship.png", _sp.x, _sp.y);
+				stage.addActor(eShip);
+			}
+		}
 	}
 
 	// Render is ran every frame of the game
