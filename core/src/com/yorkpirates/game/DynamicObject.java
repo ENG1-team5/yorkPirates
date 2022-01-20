@@ -1,15 +1,12 @@
 package com.yorkpirates.game;
 
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 abstract class DynamicObject extends StaticObject{
     Float speed = 0f;
 
     public DynamicObject(String imgName, Float xPos, Float yPos){
         super(imgName, xPos, yPos);
-        // TO DO
     }
 
     @Override
