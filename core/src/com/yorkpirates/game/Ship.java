@@ -10,16 +10,19 @@ abstract class Ship extends DynamicObject {
     long shootingCooldown = 1000; // 1s cooldown
     long lastFiredTime;
     ArrayList<CannonBall> cannonBalls = new ArrayList<CannonBall>();
+    
+    String affiliation; //College that the ship belongs to, could be changed to a reference to college?
 
-    public Ship(String imgName, Float xPos, Float yPos){
+    public Ship(String imgName, Float xPos, Float yPos,String affiliation){
         super(imgName, xPos, yPos);
+        this.affiliation = affiliation;
         lastFiredTime = TimeUtils.millis(); //used to measure time between shots in milliseconds, initialised here for conditional statement in Fire()
     }
 
     public void Fire(Float xCoord, Float yCoord){
         if (TimeUtils.timeSinceMillis(lastFiredTime) > shootingCooldown){
             lastFiredTime = TimeUtils.millis();
-            CannonBall cb = new CannonBall("cannonball.png", getX()+getWidth()/2, getY()+getHeight()/2, xCoord, yCoord,this); // "this" is a reference to this object used for hitreg
+            CannonBall cb = new CannonBall("cannonball.png", getX()+(getWidth()/2), getY()+(getHeight()/2), xCoord, yCoord,this); // "this" is a reference to this object used for hitreg
             cannonBalls.add(cb);
             getStage().addActor(cb);    
         }
