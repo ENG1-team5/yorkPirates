@@ -72,9 +72,14 @@ public class YorkPirates extends ApplicationAdapter {
 		for (MapObject sp : spawns.getObjects()) {
 			// System.out.println(sp.getName());
 			if (sp.getName().contains("enemy_spawn")) {
-				System.out.println("Spawing enemy");
 				Rectangle _sp = ((RectangleMapObject)sp).getRectangle();
 				EnemyShip eShip = new EnemyShip("ship.png", _sp.x, _sp.y);
+				stage.addActor(eShip);
+			}
+
+			if (sp.getName().contains("college_spawn")) {
+				Rectangle _sp = ((RectangleMapObject)sp).getRectangle();
+				EnemyShip eShip = new EnemyShip("ship.png", _sp.x, _sp.y, sp.getProperties().get("allegance", String.class));
 				stage.addActor(eShip);
 			}
 		}
