@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -72,13 +73,13 @@ public class YorkPirates extends ApplicationAdapter {
 			// System.out.println(sp.getName());
 			if (sp.getName().contains("enemy_spawn")) {
 				Rectangle _sp = ((RectangleMapObject)sp).getRectangle();
-				EnemyShip eShip = new EnemyShip("ship.png", _sp.x, _sp.y, sp.getProperties().get("allegance", String.class));
+				EnemyShip eShip = new EnemyShip("ship.png", _sp.x, _sp.y, sp.getProperties().get("affiliation", String.class));
 				stage.addActor(eShip);
 			}
 
 			if (sp.getName().contains("college_spawn")) {
 				Rectangle _sp = ((RectangleMapObject)sp).getRectangle();
-				EnemyShip eShip = new EnemyShip("ship.png", _sp.x, _sp.y, sp.getProperties().get("allegance", String.class));
+				College eShip = new College("college.png", _sp.x, _sp.y, sp.getProperties().get("affiliation", String.class));
 				stage.addActor(eShip);
 			}
 		}
