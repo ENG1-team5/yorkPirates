@@ -64,7 +64,7 @@ public class YorkPirates extends ApplicationAdapter {
 		// Add player ship
 		// Seperate as a player ship must be spawned for the camera to work
 		RectangleMapObject spawn = (RectangleMapObject)spawns.getObjects().get("player_spawn");
-		pShip = new PlayerShip("ship.png", spawn.getRectangle().x, spawn.getRectangle().y);
+		pShip = new PlayerShip("ship.png", spawn.getRectangle().x, spawn.getRectangle().y, "Goodricke");
 		stage.addActor(pShip);
 		stage.setKeyboardFocus(pShip);
 
@@ -73,7 +73,7 @@ public class YorkPirates extends ApplicationAdapter {
 			// System.out.println(sp.getName());
 			if (sp.getName().contains("enemy_spawn")) {
 				Rectangle _sp = ((RectangleMapObject)sp).getRectangle();
-				EnemyShip eShip = new EnemyShip("ship.png", _sp.x, _sp.y);
+				EnemyShip eShip = new EnemyShip("ship.png", _sp.x, _sp.y, sp.getProperties().get("allegance", String.class));
 				stage.addActor(eShip);
 			}
 
