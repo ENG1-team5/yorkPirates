@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -55,7 +54,7 @@ public class YorkPirates extends ApplicationAdapter {
 
 		// Changing cursor image
 		Pixmap pm = new Pixmap(Gdx.files.internal("reticle.png"));
-		Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, pm.getWidth()/2, pm.getHeight()/2)); //0,0 is the tip of the cursor on the image
+		Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm,pm.getWidth()/2,pm.getHeight()/2)); 
 		pm.dispose();
 
 		// Spawn some actors
