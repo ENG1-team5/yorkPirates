@@ -13,7 +13,6 @@ abstract class StaticObject extends Actor{
     Sprite sprite;
     Rectangle collisionBox;
 
-
     // init function, sets location and texture
     public StaticObject(String imgName, Float xPos, Float yPos){
         sprite = new Sprite(new Texture(Gdx.files.internal(imgName)));
