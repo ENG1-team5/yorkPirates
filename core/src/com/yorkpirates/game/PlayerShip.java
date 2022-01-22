@@ -2,7 +2,7 @@ package com.yorkpirates.game;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
-
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.Gdx;
 
 public class PlayerShip extends Ship{
@@ -45,8 +45,7 @@ public class PlayerShip extends Ship{
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) | Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
             // The target x and y from Gdx.input is reletive to the screen, these must be converted
             // to be reletive to the stage's coordinate system 
-            Vector2 target = getStage().screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-            
+            Vector3 target = getStage().getCamera().unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0));
             Fire(target.x, target.y);
         }
     }
