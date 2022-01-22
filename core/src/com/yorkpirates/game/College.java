@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 class College extends StaticObject{
 
-    Integer Health = 500; //default placeholder value for health
+    Integer Health = 5; //default placeholder value for health
     String affiliation; //Name of college
     Circle attackRange; //Invisible attack range, where the college will shoot at the player if they enter 
     Float attackRadius = 100f; // Radius of the attackRange Circle
@@ -38,7 +38,7 @@ class College extends StaticObject{
             if (actors.get(i) instanceof Ship){ // If the actor is a ship
                 Ship targetShip = (Ship) actors.get(i); 
                 if (Intersector.overlaps(attackRange, targetShip.collisionBox)){
-                    if (this.affiliation != targetShip.affiliation){ // Check if the ship is an enemy of the college, i.e. not the same affiliations
+                    if (!this.affiliation.equals(targetShip.affiliation)){ // Check if the ship is an enemy of the college, i.e. not the same affiliations
                         Fire(targetShip.getX(),targetShip.getY());
                     }
                 }   
@@ -55,9 +55,12 @@ class College extends StaticObject{
         }
     }
 
-    public void Hit(){
+    public void Hit(String newAffiliation){
         //Do something, remove health etc.
         Health -= 1;
+        if(Health <= 0){
+            this.affiliation = newAffiliation; 
+        }
         System.out.println("College has been hit " + Health);
     }
 }

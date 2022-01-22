@@ -55,7 +55,7 @@ public class CannonBall extends DynamicObject{
                     if(actors.get(i) instanceof College){
                         College college = (College) actors.get(i);
                         if (collisionBox.overlaps(college.collisionBox)){
-                            college.Hit();
+                            college.Hit(((PlayerShip)owner).affiliation);
                             explode();
                         }
                     }
@@ -75,7 +75,7 @@ public class CannonBall extends DynamicObject{
                     //Bullet fired by a college hits any ship 
                     if(actors.get(i) instanceof Ship){
                         Ship targetShip = (Ship) actors.get(i);
-                        if (targetShip.affiliation != ((College)owner).affiliation){ // This makes it so cannonballs fired by a college pass over friendly ships, could be changed
+                        if (!targetShip.affiliation.equals(((College)owner).affiliation)){ // This makes it so cannonballs fired by a college pass over friendly ships, could be changed
                             if (collisionBox.overlaps(targetShip.collisionBox)){
                                 targetShip.Hit();
                                 explode();
