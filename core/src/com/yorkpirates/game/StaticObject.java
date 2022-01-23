@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 abstract class StaticObject extends Actor{
     Sprite sprite;
-    Rectangle collisionBox;
+    public Rectangle collisionBox;
 
     // init function, sets location and texture
     public StaticObject(String imgName, Float xPos, Float yPos){

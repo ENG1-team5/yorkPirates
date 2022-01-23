@@ -1,9 +1,15 @@
 package com.yorkpirates.game;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
 
 abstract class DynamicObject extends StaticObject{
     Float speed = 0f;
+    Boolean collisionFlag = F
 
     public DynamicObject(String imgName, Float xPos, Float yPos){
         super(imgName, xPos, yPos);
@@ -24,11 +30,34 @@ abstract class DynamicObject extends StaticObject{
         float newX = oldX + MathUtils.cosDeg(getRotation()) * speed;
         float newY = oldY + MathUtils.sinDeg(getRotation()) * speed;
 
-        if (newX < 0 || getStage().getHeight() < newX) { newX = oldX; }
-        if (newY < 0 || getStage().getWidth() < newY) { newY = oldY; }
+        if (checkActorCollisions()) {
+            speed = 0f;
+        }
 
         setX(newX);
         setY(newY);
     }
-    
+
+    public Boolean checkActorCollisions() {
+
+        if (getX() < 0 || getStage().getHeight() < getX()) {
+            return false;
+        }
+        if (getY() < 0 || getStage().getHeight() < getY()) {
+            return false;
+        }
+
+        Array<Actor> actors = getStage().getActors();
+
+        for (Actor actor : actors) {
+            if (actor instanceof StaticObject) {
+                StaticObject x = (StaticObject)actor;
+                if (x.collisionBox.overlaps(this.collisionBox)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }
