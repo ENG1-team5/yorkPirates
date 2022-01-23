@@ -47,16 +47,18 @@ public class CannonBall extends DynamicObject{
                     if(actors.get(i) instanceof EnemyShip){
                         EnemyShip eShip = (EnemyShip) actors.get(i);
                         if (collisionBox.overlaps(eShip.collisionBox)){
-                            eShip.Hit();
+                            ((PlayerShip) owner).plunder += eShip.Hit();
                             explode();
                         }
                     }
                     //Bullet is owned by player and hits college
                     if(actors.get(i) instanceof College){
                         College college = (College) actors.get(i);
-                        if (collisionBox.overlaps(college.collisionBox)){
-                            college.Hit(((PlayerShip)owner).affiliation);
-                            explode();
+                        if (!college.affiliation.equals(((PlayerShip)owner).affiliation)){ //Makes it so players cannot friendly fire their own colleges.
+                            if (collisionBox.overlaps(college.collisionBox)){
+                                ((PlayerShip) owner).plunder += college.Hit(((PlayerShip)owner).affiliation);
+                                explode();
+                            }
                         }
                     }
                 }

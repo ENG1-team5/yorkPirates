@@ -2,13 +2,14 @@ package com.yorkpirates.game;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.TimeUtils;
 
 abstract class Ship extends DynamicObject {
     Integer maxHealth = 5; //default placeholder value for health
     Integer Health = maxHealth; 
     HealthBar healthBar;
+
+    Integer plunder = 10; //All ships start holding 10 plunder, even the playership
     
     long shootingCooldown = 1000; // 1s cooldown
     long lastFiredTime;
@@ -31,12 +32,13 @@ abstract class Ship extends DynamicObject {
         }
     }
 
-    public void Hit(){
+    public Integer Hit(){ 
         Health -= 1;
         if (Health <= 0){
             explode();
+            return plunder; // If ship is destroyed, return any plunder it holds
         }
-        System.out.println("Ship hit " + Health);
+        return 0; //If ship not destroyed, return no plunder
     }
 
     public void explode(){

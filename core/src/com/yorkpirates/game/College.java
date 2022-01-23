@@ -10,9 +10,13 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 class College extends StaticObject{
 
-    Integer Health = 5; //default placeholder value for health
-    Integer maxHealth = 5;
+    Integer Health = 10; //default placeholder value for health
+    Integer maxHealth = 10;
     HealthBar healthBar;
+    float offsetToCenter;
+    float healthBarBuffer = 30f; //How high above the ship the health bar floats
+
+    Integer plunder = 50; // Worth 50 by default
 
     String affiliation; //Name of college
     Circle attackRange; //Invisible attack range, where the college will shoot at the player if they enter 
@@ -21,10 +25,11 @@ class College extends StaticObject{
     long shootingCooldown = 2000; // 2s cooldown
     long lastFiredTime;
     ArrayList<CannonBall> cannonBalls = new ArrayList<CannonBall>();
+    
 
     public College(String imgName, Float xPos, Float yPos, String affiliation){
         super(imgName, xPos, yPos);
-        this.affiliation = affiliation;
+        this.affiliation = affiliation; 
         
         attackRange = new Circle(attackRadius,this.getX(),this.getY());
         
@@ -47,6 +52,11 @@ class College extends StaticObject{
                 }   
             }     
         }
+        if (healthBar != null){
+            healthBar.setX(getX() + offsetToCenter);
+            healthBar.setY(getY() + getHeight() + healthBarBuffer);
+        }
+        
     }
 
     public void Fire(Float xCoord, Float yCoord){
@@ -58,17 +68,20 @@ class College extends StaticObject{
         }
     }
 
-    public void Hit(String newAffiliation){
+    public Integer Hit(String newAffiliation){
         //Do something, remove health etc.
         if (Health == maxHealth){ //If this is the first hit taken, spawn a health bar above the ship
             healthBar = new HealthBar(this);
+            offsetToCenter = (getWidth() - healthBar.fgSprite.getWidth()) / 2; //Helps to work out where to place the healthbar
             getStage().addActor(healthBar);
         }
         Health -= 1;
         if(Health <= 0){
             this.affiliation = newAffiliation; 
             Health = maxHealth;
+            healthBar.remove();
+            return plunder; //If college destroyed, return its plunder to its killer
         }
-        System.out.println("College has been hit " + Health);
+        return 0; // If college not destroyed, return 0 plunder
     }
 }

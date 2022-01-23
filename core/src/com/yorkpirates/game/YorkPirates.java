@@ -1,11 +1,11 @@
 package com.yorkpirates.game;
 
-import javax.swing.text.html.HTMLFrameHyperlinkEvent;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
@@ -15,7 +15,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -30,8 +29,10 @@ public class YorkPirates extends ApplicationAdapter {
 	PlayerShip pShip;
 	
 	//Ui variables
-	Stage uiStage;
-	Skin uiSkin;
+	SpriteBatch uiBatch;
+	BitmapFont font;
+
+	HealthBar pHealthBar;
 
 	// Create is run when the game is launched
 	@Override
@@ -69,6 +70,7 @@ public class YorkPirates extends ApplicationAdapter {
 		pShip = new PlayerShip("ship.png", spawn.getRectangle().x, spawn.getRectangle().y, "Goodricke");
 		stage.addActor(pShip);
 		stage.setKeyboardFocus(pShip);
+		
 
 		// Spawn other 
 		for (MapObject sp : spawns.getObjects()) {
@@ -85,6 +87,15 @@ public class YorkPirates extends ApplicationAdapter {
 				stage.addActor(eShip);
 			}
 		}
+
+		//Ui code
+		uiBatch = new SpriteBatch();
+		font = new BitmapFont();
+		pHealthBar = new HealthBar(pShip);
+		pHealthBar.scaleBy(1.5f);
+		pHealthBar.setX(15);
+		pHealthBar.setY(Gdx.graphics.getHeight()-35);
+
 	}
 
 	// Render is ran every frame of the game
@@ -100,6 +111,13 @@ public class YorkPirates extends ApplicationAdapter {
 
 		stage.act(Gdx.graphics.getDeltaTime()); // Runs the act function for all objects in stage, passes in amount of time since last frame
 		stage.draw();
+
+		//ui Rendering
+		uiBatch.begin();
+		font.setColor(1.0f,1.0f,1.0f,1.0f);
+		font.draw(uiBatch,"Plunder = " + pShip.plunder,25,25); //Plunder counter in roughly the center of screen
+		pHealthBar.draw(uiBatch, 0); // Draws the player health bar
+		uiBatch.end();
 	}
 
 	@Override

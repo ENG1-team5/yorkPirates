@@ -1,15 +1,11 @@
 package com.yorkpirates.game;
 
-import java.lang.reflect.Type;
-import java.nio.Buffer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class HealthBar extends Actor{
     Texture healthBarBackground;
@@ -21,6 +17,8 @@ public class HealthBar extends Actor{
     Sprite bgSprite;
     float offsetToCenter;
 
+    //Note, setX and setY is controlled outside of this object to make it more reusable
+
     public HealthBar(StaticObject owner){
         this.owner = owner;
         
@@ -30,7 +28,7 @@ public class HealthBar extends Actor{
         fgSprite = new Sprite(healthBarForeground); // The foreground sprite is the one that shrinks as health gets lower
         bgSprite = new Sprite(healthBarBackground); // Background sprite remains constant to show the original size of the health bar
 
-        offsetToCenter = (owner.getWidth() - fgSprite.getWidth()) / 2 ;
+        
     }
 
     @Override
@@ -38,7 +36,7 @@ public class HealthBar extends Actor{
         float Health = 0; //This is a pretty ugly workaround.
         float MaxHealth = 0;
 
-        // If this healthbar code is to be used with another object, it must be added as an if statement here to access Health
+        // If this healthbar code is to be used with another object, it must be added as an if statement here to access
         if (owner instanceof College){
             Health =  ((College)owner).Health;
             MaxHealth = ((College)owner).maxHealth;
@@ -48,8 +46,6 @@ public class HealthBar extends Actor{
             MaxHealth = ((Ship)owner).maxHealth;
         }
         
-        setX(owner.getX() + offsetToCenter);
-        setY(owner.getY() + owner.getHeight() + buffer);
 
         batch.setColor(determineColor(Health,MaxHealth)); //Works out the tint that needs to be applyed to the sprites that make up healthBar
         batch.draw(fgSprite, getX(), getY(), getOriginX(), getOriginY(), (fgSprite.getRegionWidth()/(MaxHealth/Health)), fgSprite.getRegionHeight(), getScaleX(), getScaleY(), getRotation());

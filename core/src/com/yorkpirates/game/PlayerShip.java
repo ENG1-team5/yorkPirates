@@ -12,10 +12,6 @@ public class PlayerShip extends Ship{
 
     public PlayerShip(String imgName, Float xPos, Float yPos,String affiliation){
         super(imgName, xPos, yPos, affiliation);
-
-        //Creating a healthbar
-        float totalBarWidth = Gdx.graphics.getWidth()/2;
-        float width = Health / maxHealth * totalBarWidth;
         
     }
 
@@ -52,5 +48,10 @@ public class PlayerShip extends Ship{
             Vector3 target = getStage().getCamera().unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0));
             Fire(target.x, target.y);
         }
+    }
+
+    
+    public Integer Hit(){
+        return super.Hit();
     }
 }
