@@ -11,6 +11,9 @@ import com.badlogic.gdx.utils.TimeUtils;
 class College extends StaticObject{
 
     Integer Health = 5; //default placeholder value for health
+    Integer maxHealth = 5;
+    HealthBar healthBar;
+
     String affiliation; //Name of college
     Circle attackRange; //Invisible attack range, where the college will shoot at the player if they enter 
     Float attackRadius = 100f; // Radius of the attackRange Circle
@@ -57,9 +60,14 @@ class College extends StaticObject{
 
     public void Hit(String newAffiliation){
         //Do something, remove health etc.
+        if (Health == maxHealth){ //If this is the first hit taken, spawn a health bar above the ship
+            healthBar = new HealthBar(this);
+            getStage().addActor(healthBar);
+        }
         Health -= 1;
         if(Health <= 0){
             this.affiliation = newAffiliation; 
+            Health = maxHealth;
         }
         System.out.println("College has been hit " + Health);
     }

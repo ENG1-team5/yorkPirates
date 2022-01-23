@@ -2,11 +2,14 @@ package com.yorkpirates.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.TimeUtils;
 
 abstract class Ship extends DynamicObject {
-
-    Integer Health = 500; //default placeholder value for health
+    Integer maxHealth = 5; //default placeholder value for health
+    Integer Health = maxHealth; 
+    HealthBar healthBar;
+    
     long shootingCooldown = 1000; // 1s cooldown
     long lastFiredTime;
     ArrayList<CannonBall> cannonBalls = new ArrayList<CannonBall>();
@@ -29,9 +32,16 @@ abstract class Ship extends DynamicObject {
     }
 
     public void Hit(){
-        //Do something, remove health etc.
         Health -= 1;
-        System.out.println("I have been hit" + Health);
+        if (Health <= 0){
+            explode();
+        }
+        System.out.println("Ship hit " + Health);
+    }
+
+    public void explode(){
+        // Add animation, or additional effect
+        remove();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.yorkpirates.game;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 
 abstract class DynamicObject extends StaticObject{

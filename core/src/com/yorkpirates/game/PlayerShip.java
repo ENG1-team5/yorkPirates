@@ -1,7 +1,6 @@
 package com.yorkpirates.game;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.Gdx;
 
@@ -13,6 +12,11 @@ public class PlayerShip extends Ship{
 
     public PlayerShip(String imgName, Float xPos, Float yPos,String affiliation){
         super(imgName, xPos, yPos, affiliation);
+
+        //Creating a healthbar
+        float totalBarWidth = Gdx.graphics.getWidth()/2;
+        float width = Health / maxHealth * totalBarWidth;
+        
     }
 
     // Called each frame

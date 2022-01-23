@@ -1,5 +1,7 @@
 package com.yorkpirates.game;
 
+import javax.swing.text.html.HTMLFrameHyperlinkEvent;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -21,13 +24,14 @@ public class YorkPirates extends ApplicationAdapter {
 
 	Stage stage;
 	TiledMap map;
+	Viewport viewport;
 	OrthographicCamera camera;
 	OrthogonalTiledMapRenderer tiledMapRenderer;
-
-	// The player ship
-	// Unsure if this is a good idea but need to keep it around
-	// So we can set the orthoCam position to its position
-	StaticObject pShip;
+	PlayerShip pShip;
+	
+	//Ui variables
+	Stage uiStage;
+	Skin uiSkin;
 
 	// Create is run when the game is launched
 	@Override
@@ -44,14 +48,12 @@ public class YorkPirates extends ApplicationAdapter {
 
 		// Create and set up orthographic camera
 		camera = new OrthographicCamera();
-		Viewport viewport = new FitViewport(mapWidth, mapHeight, camera);
+		viewport = new FitViewport(mapWidth, mapHeight, camera);
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		// Stage acts as a container for actors, holding the references for them that can be collected with stage.getActors()
 		stage = new Stage(viewport); // Creates a stage the size of our screen
 		Gdx.input.setInputProcessor(stage); // Wires up the stage as our input processor
-
-		// System.out.println(stage.getHeight() + " " + stage.getWidth());
 
 		// Changing cursor image
 		Pixmap pm = new Pixmap(Gdx.files.internal("reticle.png"));
