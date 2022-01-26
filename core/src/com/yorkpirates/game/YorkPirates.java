@@ -1,5 +1,7 @@
 package com.yorkpirates.game;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -26,9 +29,12 @@ public class YorkPirates extends ApplicationAdapter {
 	Viewport viewport;
 	OrthographicCamera camera;
 	OrthogonalTiledMapRenderer tiledMapRenderer;
+	
 	PlayerShip pShip;
+	ArrayList<College> colleges;  
 	
 	//Ui variables
+	Vector2 originalScreenSize;  //Used to calculate positions for some ui elements
 	SpriteBatch uiBatch;
 	BitmapFont font;
 
@@ -71,6 +77,8 @@ public class YorkPirates extends ApplicationAdapter {
 		stage.addActor(pShip);
 		stage.setKeyboardFocus(pShip);
 		
+		// Initialise colleges list
+		colleges = new ArrayList<College>();
 
 		// Spawn other 
 		for (MapObject sp : spawns.getObjects()) {
@@ -83,14 +91,16 @@ public class YorkPirates extends ApplicationAdapter {
 
 			if (sp.getName().contains("college_spawn")) {
 				Rectangle _sp = ((RectangleMapObject)sp).getRectangle();
-				College eShip = new College("college.png", _sp.x, _sp.y, sp.getProperties().get("affiliation", String.class));
-				stage.addActor(eShip);
+				College college = new College("college.png", _sp.x, _sp.y, sp.getProperties().get("affiliation", String.class));
+				colleges.add(college);
+				stage.addActor(college);
 			}
 		}
 
 		//Ui code
 		uiBatch = new SpriteBatch();
 		font = new BitmapFont();
+		originalScreenSize = new Vector2(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		pHealthBar = new HealthBar(pShip);
 		pHealthBar.scaleBy(1.5f);
 		pHealthBar.setX(15);
@@ -115,7 +125,19 @@ public class YorkPirates extends ApplicationAdapter {
 		//ui Rendering
 		uiBatch.begin();
 		font.setColor(1.0f,1.0f,1.0f,1.0f);
-		font.draw(uiBatch,"Plunder = " + pShip.plunder,25,25); //Plunder counter in roughly the center of screen
+		font.draw(uiBatch, "Objective: Destroy enemy colleges", originalScreenSize.x - 250, originalScreenSize.y - 20);
+		if (colleges.size() == 0){
+			font.draw(uiBatch, "No enemy colleges remaining!", originalScreenSize.x - 250, originalScreenSize.y -40);
+		}
+		else{
+			for (int i = 0; i < colleges.size(); i++){
+				College college = colleges.get(i);
+				if (college.affiliation == pShip.affiliation){colleges.remove(i);} // If college is freindly, remove it from the list
+				// Places a health percentage for each college in a vertical list
+				font.draw(uiBatch, college.affiliation + " : health = " + (int)((college.Health/college.maxHealth)*100) + "%", originalScreenSize.x - 200, originalScreenSize.y -(40 * (i+1))); //Scales vetically with i
+			}
+		}
+		font.draw(uiBatch,"Plunder = " + pShip.plunder,25, 25); //Plunder counter in roughly the center of screen
 		pHealthBar.draw(uiBatch, 0); // Draws the player health bar
 		uiBatch.end();
 	}

@@ -10,8 +10,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 class College extends StaticObject{
 
-    Integer Health = 10; //default placeholder value for health
-    Integer maxHealth = 10;
+    float Health = 10; //default placeholder value for health
+    float maxHealth = 10;
     HealthBar healthBar;
     float offsetToCenter;
     float healthBarBuffer = 30f; //How high above the ship the health bar floats
