@@ -32,6 +32,7 @@ public class YorkPirates extends ApplicationAdapter {
 	// Create is run when the game is launched
 	@Override
 	public void create () {
+
 		// Load tiled map
 		map = new TmxMapLoader().load("placeholder.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
@@ -55,7 +56,7 @@ public class YorkPirates extends ApplicationAdapter {
 
 		// Changing cursor image
 		Pixmap pm = new Pixmap(Gdx.files.internal("reticle.png"));
-		Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm,pm.getWidth()/2,pm.getHeight()/2)); 
+		Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, pm.getWidth()/2, pm.getHeight()/2)); 
 		pm.dispose();
 
 		// Spawn some actors
@@ -70,7 +71,6 @@ public class YorkPirates extends ApplicationAdapter {
 
 		// Spawn other 
 		for (MapObject sp : spawns.getObjects()) {
-			// System.out.println(sp.getName());
 			if (sp.getName().contains("enemy_spawn")) {
 				Rectangle _sp = ((RectangleMapObject)sp).getRectangle();
 				EnemyShip eShip = new EnemyShip("ship.png", _sp.x, _sp.y, sp.getProperties().get("affiliation", String.class));

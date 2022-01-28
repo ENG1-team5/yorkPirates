@@ -46,7 +46,7 @@ public class PlayerShip extends Ship{
             // The target x and y from Gdx.input is reletive to the screen, these must be converted
             // to be reletive to the stage's coordinate system 
             Vector2 target = getStage().screenToStageCoordinates(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
-            
+
             Fire(target.x, target.y);
         }
     }

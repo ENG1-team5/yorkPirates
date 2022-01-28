@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -13,7 +14,7 @@ class College extends StaticObject{
     Integer Health = 500; //default placeholder value for health
     String affiliation; //Name of college
     Circle attackRange; //Invisible attack range, where the college will shoot at the player if they enter 
-    Float attackRadius = 100f; // Radius of the attackRange Circle
+    Float attackRadius = 300f; // Radius of the attackRange Circle
     
     long shootingCooldown = 2000; // 2s cooldown
     long lastFiredTime;
@@ -23,7 +24,7 @@ class College extends StaticObject{
         super(imgName, xPos, yPos);
         this.affiliation = affiliation;
         
-        attackRange = new Circle(attackRadius,this.getX(),this.getY());
+        // attackRange = new Circle(attackRadius,this.getX(),this.getY());
         
     }
 
@@ -37,7 +38,7 @@ class College extends StaticObject{
                 
             if (actors.get(i) instanceof Ship){ // If the actor is a ship
                 Ship targetShip = (Ship) actors.get(i); 
-                if (Intersector.overlaps(attackRange, targetShip.collisionBox)){
+                if (new Vector2(targetShip.getX(), targetShip.getY()).dst(new Vector2(getX(), getY())) < attackRadius){
                     if (this.affiliation != targetShip.affiliation){ // Check if the ship is an enemy of the college, i.e. not the same affiliations
                         Fire(targetShip.getX(),targetShip.getY());
                     }
