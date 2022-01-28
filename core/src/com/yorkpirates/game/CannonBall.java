@@ -26,9 +26,11 @@ public class CannonBall extends DynamicObject{
         timeFired = TimeUtils.millis();
     }
 
+    /** Removes object from stage and perform any additional code specified in the function*/
     public void explode(){
         remove();
     }
+
     // Anything in here is ran every frame the object is alive
     @Override
     public void act(float delta){

@@ -22,6 +22,10 @@ public class EnemyShip extends Ship{
         }
     }
 
+    /** Spawns a healthbar above the ship if it is the first time it was called. 
+    *   Calls super.Hit() to handle health and checks
+    *   @return Boolean representing whether ship has been destroyed
+    */
     public Boolean Hit(){
         if (Health == maxHealth){ //If this is the first hit taken, spawn a health bar above the ship
             healthBar = new HealthBar(this);
@@ -31,6 +35,7 @@ public class EnemyShip extends Ship{
         return super.Hit();
     }
 
+    /** Performs on death. Removes object from stage and perform any additional code specified in the function*/
     public void explode(){
         healthBar.remove();
         remove();

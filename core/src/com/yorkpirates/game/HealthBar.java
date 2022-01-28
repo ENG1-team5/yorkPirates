@@ -33,7 +33,7 @@ public class HealthBar extends Actor{
 
     @Override
     public void draw(Batch batch, float parentAlpha){
-        float Health = 0; //This is a pretty ugly workaround.
+        float Health = 0;
         float MaxHealth = 0;
 
         // If this healthbar code is to be used with another object, it must be added as an if statement here to access
@@ -52,7 +52,14 @@ public class HealthBar extends Actor{
         batch.setColor(Color.WHITE); //Resets color to ensure all other draw actions are not tinted
     }
 
+
+    /** Function to return an appropriate colour of healthbar
+         * @param Health 
+         * @param MaxHealth 
+         * @return Color returns approprate colour  
+    */
     public Color determineColor(float Health, float MaxHealth){
+        
         Color color = Color.GREEN; //Default colour is green if above 66% health
         if (Health <= (MaxHealth * 0.66)){
             color =  Color.ORANGE; //If below 66% health, set bar to orange

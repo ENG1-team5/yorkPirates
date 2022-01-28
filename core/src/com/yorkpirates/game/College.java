@@ -60,6 +60,12 @@ class College extends StaticObject{
         
     }
 
+    /** Fires a cannonball from the center of the college towards a target
+     *  only if the time elapsed since the last shot is greater than shootingCooldown.
+     *  Cannonball is added to the same stage as the college object that fires it
+     *  @param xCoord x target of the cannonball
+     *  @param yCoord y target of the cannonball
+     *  */ 
     public void Fire(Float xCoord, Float yCoord){
         if (TimeUtils.timeSinceMillis(lastFiredTime) > shootingCooldown){
             lastFiredTime = TimeUtils.millis();
@@ -69,8 +75,13 @@ class College extends StaticObject{
         }
     }
 
+    /** Removes 1 health from the college and spawning a healthbar upon being hit for the first time, 
+     *  changing its affiliation to its attacker's college if it's health drops below 0.
+     *  This function invoked by CannonBall class in its collision detection loop
+     *  @param newAffiliation The attackers affiliation string e.g "Goodricke"
+     *  @return Boolean representing if college was destroyed in attack or not 
+     */
     public Boolean Hit(String newAffiliation){
-        //Do something, remove health etc.
         if (Health == maxHealth){ //If this is the first hit taken, spawn a health bar above the ship
             healthBar = new HealthBar(this);
             offsetToCenter = (getWidth() - healthBar.fgSprite.getWidth()) / 2; //Helps to work out where to place the healthbar

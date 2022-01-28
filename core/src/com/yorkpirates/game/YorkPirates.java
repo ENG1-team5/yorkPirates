@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
@@ -56,6 +57,7 @@ public class YorkPirates extends ApplicationAdapter {
 
 		// Create and set up orthographic camera
 		camera = new OrthographicCamera();
+		camera.zoom = 0.65f; //Changes the zoom, bringing the camera in
 		viewport = new FitViewport(mapWidth, mapHeight, camera);
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -74,25 +76,26 @@ public class YorkPirates extends ApplicationAdapter {
 		// Add player ship
 		// Seperate as a player ship must be spawned for the camera to work
 		RectangleMapObject spawn = (RectangleMapObject)spawns.getObjects().get("player_spawn");
-		pShip = new PlayerShip("ship.png", spawn.getRectangle().x, spawn.getRectangle().y, "Goodricke");
+		pShip = new PlayerShip("james_ship.png", spawn.getRectangle().x, spawn.getRectangle().y, "james");
 		stage.addActor(pShip);
 		stage.setKeyboardFocus(pShip);
 		
 		// Initialise colleges list
 		colleges = new ArrayList<College>();
 
-		// Spawn other 
+		// Spawn other objects from the tilemap layout
 		for (MapObject sp : spawns.getObjects()) {
-			// System.out.println(sp.getName());
+			String affiliation = sp.getProperties().get("affiliation",String.class);
+
 			if (sp.getName().contains("enemy_spawn")) {
 				Rectangle _sp = ((RectangleMapObject)sp).getRectangle();
-				EnemyShip eShip = new EnemyShip("ship.png", _sp.x, _sp.y, sp.getProperties().get("affiliation", String.class));
+				EnemyShip eShip = new EnemyShip(affiliation + "_ship" + ".png", _sp.x, _sp.y, affiliation);
 				stage.addActor(eShip);
 			}
 
 			if (sp.getName().contains("college_spawn")) {
 				Rectangle _sp = ((RectangleMapObject)sp).getRectangle();
-				College college = new College("college.png", _sp.x, _sp.y, sp.getProperties().get("affiliation", String.class));
+				College college = new College(affiliation + "_college" + ".png", _sp.x, _sp.y, affiliation);
 				colleges.add(college);
 				stage.addActor(college);
 			}
@@ -101,8 +104,9 @@ public class YorkPirates extends ApplicationAdapter {
 		//Ui code
 		uiBatch = new SpriteBatch();
 		font = new BitmapFont();
+		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear); // Makes the font a bit smoother when scaled, could be turned off
 		originalScreenSize = new Vector2(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-		pHealthBar = new HealthBar(pShip);
+		pHealthBar = new HealthBar(pShip); //Create and place the player's healthbar on the UI
 		pHealthBar.scaleBy(1.5f);
 		pHealthBar.setX(15);
 		pHealthBar.setY(Gdx.graphics.getHeight()-35);
@@ -127,7 +131,7 @@ public class YorkPirates extends ApplicationAdapter {
 		font.setColor(1.0f,1.0f,1.0f,1.0f);
 		font.draw(uiBatch, "Objective: Destroy enemy colleges", originalScreenSize.x - 250, originalScreenSize.y - 20);
 		if (colleges.size() == 0){
-			font.draw(uiBatch, "No enemy colleges remaining!", originalScreenSize.x - 250, originalScreenSize.y -40);
+			font.draw(uiBatch, "    No enemy colleges remaining!", originalScreenSize.x - 250, originalScreenSize.y -40);
 		}
 		else{
 			for (int i = 0; i < colleges.size(); i++){
@@ -138,9 +142,9 @@ public class YorkPirates extends ApplicationAdapter {
 			}
 		}
 		font.draw(uiBatch, " x " + pShip.XP, originalScreenSize.x -100, 35);
-		uiBatch.draw(new Texture("CannonBall.png"), originalScreenSize.x -130,15);
+		uiBatch.draw(new Texture("XP.png"), originalScreenSize.x -130,15);
 		font.draw(uiBatch," x " + pShip.plunder,60, 35); //Plunder counter in roughly the center of screen
-		uiBatch.draw(new Texture("CannonBall.png"),25,15);
+		uiBatch.draw(new Texture("coin.png"),25,15);
 		pHealthBar.draw(uiBatch, 0); // Draws the player health bar
 		uiBatch.end();
 	}

@@ -23,6 +23,12 @@ abstract class Ship extends DynamicObject {
         lastFiredTime = TimeUtils.millis(); //used to measure time between shots in milliseconds, initialised here for conditional statement in Fire()
     }
 
+    /** Fires a cannonball from the center of the ship towards a target
+     *  only if the time elapsed since the last shot is greater than shootingCooldown.
+     *  Cannonball is added to the same stage as the ship object that fires it
+     *  @param xCoord x target of the cannonball
+     *  @param yCoord y target of the cannonball
+     *  */ 
     public void Fire(Float xCoord, Float yCoord){
         if (TimeUtils.timeSinceMillis(lastFiredTime) > shootingCooldown){
             lastFiredTime = TimeUtils.millis();
@@ -32,6 +38,10 @@ abstract class Ship extends DynamicObject {
         }
     }
 
+    /**Takes 1 health of of the ship. 
+     * Checks if the health of the ship is less than 0, removing it from the stage if so
+     * @return Boolean representing if the ship has been destroyed by the attack
+     */
     public Boolean Hit(){ 
         Health -= 1;
         if (Health <= 0){
@@ -41,8 +51,8 @@ abstract class Ship extends DynamicObject {
         return false; //If ship not destroyed, return no plunder
     }
 
+    /** Performed on death. Removes object from stage and perform any additional code specified in the function*/
     public void explode(){
-        // Add animation, or additional effect
         remove();
     }
 

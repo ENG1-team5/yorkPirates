@@ -50,7 +50,10 @@ public class PlayerShip extends Ship{
         }
     }
 
-    
+    /**
+     * Calls super.Hit() to perform any health checks as well as any code
+     * in playerShips hit function.
+     */
     public Boolean Hit(){
         return super.Hit();
     }
