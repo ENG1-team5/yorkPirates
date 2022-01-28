@@ -1,9 +1,15 @@
 package com.yorkpirates.game;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
@@ -12,6 +18,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -21,13 +28,19 @@ public class YorkPirates extends ApplicationAdapter {
 
 	Stage stage;
 	TiledMap map;
+	Viewport viewport;
 	OrthographicCamera camera;
 	OrthogonalTiledMapRenderer tiledMapRenderer;
+	
+	PlayerShip pShip;
+	ArrayList<College> colleges;  
+	
+	//Ui variables
+	Vector2 originalScreenSize;  //Used to calculate positions for some ui elements
+	SpriteBatch uiBatch;
+	BitmapFont font;
 
-	// The player ship
-	// Unsure if this is a good idea but need to keep it around
-	// So we can set the orthoCam position to its position
-	StaticObject pShip;
+	HealthBar pHealthBar;
 
 	// Create is run when the game is launched
 	@Override
@@ -45,14 +58,13 @@ public class YorkPirates extends ApplicationAdapter {
 
 		// Create and set up orthographic camera
 		camera = new OrthographicCamera();
-		Viewport viewport = new FitViewport(mapWidth, mapHeight, camera);
+		camera.zoom = 0.65f; //Changes the zoom, bringing the camera in
+		viewport = new FitViewport(mapWidth, mapHeight, camera);
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		// Stage acts as a container for actors, holding the references for them that can be collected with stage.getActors()
 		stage = new Stage(viewport); // Creates a stage the size of our screen
 		Gdx.input.setInputProcessor(stage); // Wires up the stage as our input processor
-
-		// System.out.println(stage.getHeight() + " " + stage.getWidth());
 
 		// Changing cursor image
 		Pixmap pm = new Pixmap(Gdx.files.internal("reticle.png"));
@@ -65,24 +77,40 @@ public class YorkPirates extends ApplicationAdapter {
 		// Add player ship
 		// Seperate as a player ship must be spawned for the camera to work
 		RectangleMapObject spawn = (RectangleMapObject)spawns.getObjects().get("player_spawn");
-		pShip = new PlayerShip("ship.png", spawn.getRectangle().x, spawn.getRectangle().y, "Goodricke");
+		pShip = new PlayerShip("james_ship.png", spawn.getRectangle().x, spawn.getRectangle().y, "james");
 		stage.addActor(pShip);
 		stage.setKeyboardFocus(pShip);
+		
+		// Initialise colleges list
+		colleges = new ArrayList<College>();
 
-		// Spawn other 
+		// Spawn other objects from the tilemap layout
 		for (MapObject sp : spawns.getObjects()) {
-			if (sp.getName().contains("enemy_spawn")) {
+			String affiliation = sp.getProperties().get("affiliation",String.class);
+
+      if (sp.getName().contains("enemy_spawn")) {
 				Rectangle _sp = ((RectangleMapObject)sp).getRectangle();
-				EnemyShip eShip = new EnemyShip("ship.png", _sp.x, _sp.y, sp.getProperties().get("affiliation", String.class));
+				EnemyShip eShip = new EnemyShip(affiliation + "_ship" + ".png", _sp.x, _sp.y, affiliation);
 				stage.addActor(eShip);
 			}
 
 			if (sp.getName().contains("college_spawn")) {
 				Rectangle _sp = ((RectangleMapObject)sp).getRectangle();
-				College eShip = new College("college.png", _sp.x, _sp.y, sp.getProperties().get("affiliation", String.class));
-				stage.addActor(eShip);
+				College college = new College(affiliation + "_college" + ".png", _sp.x, _sp.y, affiliation);
+				colleges.add(college);
+				stage.addActor(college);
 			}
 		}
+
+		//Ui code
+		uiBatch = new SpriteBatch();
+		font = new BitmapFont();
+		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear); // Makes the font a bit smoother when scaled, could be turned off
+		originalScreenSize = new Vector2(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		pHealthBar = new HealthBar(pShip); //Create and place the player's healthbar on the UI
+		pHealthBar.scaleBy(1.5f);
+		pHealthBar.setX(15);
+		pHealthBar.setY(Gdx.graphics.getHeight()-35);
 	}
 
 	// Render is ran every frame of the game
@@ -98,6 +126,28 @@ public class YorkPirates extends ApplicationAdapter {
 
 		stage.act(Gdx.graphics.getDeltaTime()); // Runs the act function for all objects in stage, passes in amount of time since last frame
 		stage.draw();
+
+		//ui Rendering
+		uiBatch.begin();
+		font.setColor(1.0f,1.0f,1.0f,1.0f);
+		font.draw(uiBatch, "Objective: Destroy enemy colleges", originalScreenSize.x - 250, originalScreenSize.y - 20);
+		if (colleges.size() == 0){
+			font.draw(uiBatch, "    No enemy colleges remaining!", originalScreenSize.x - 250, originalScreenSize.y -40);
+		}
+		else{
+			for (int i = 0; i < colleges.size(); i++){
+				College college = colleges.get(i);
+				if (college.affiliation == pShip.affiliation){colleges.remove(i);} // If college is freindly, remove it from the list
+				// Places a health percentage for each college in a vertical list
+				font.draw(uiBatch, college.affiliation + " : health = " + (int)((college.Health/college.maxHealth)*100) + "%", originalScreenSize.x - 200, originalScreenSize.y -(40 * (i+1))); //Scales vetically with i
+			}
+		}
+		font.draw(uiBatch, " x " + pShip.XP, originalScreenSize.x -100, 35);
+		uiBatch.draw(new Texture("XP.png"), originalScreenSize.x -130,15);
+		font.draw(uiBatch," x " + pShip.plunder,60, 35); //Plunder counter in roughly the center of screen
+		uiBatch.draw(new Texture("coin.png"),25,15);
+		pHealthBar.draw(uiBatch, 0); // Draws the player health bar
+		uiBatch.end();
 	}
 
 	@Override

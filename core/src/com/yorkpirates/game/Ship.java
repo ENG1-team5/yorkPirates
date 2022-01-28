@@ -5,8 +5,12 @@ import java.util.ArrayList;
 import com.badlogic.gdx.utils.TimeUtils;
 
 abstract class Ship extends DynamicObject {
+    Integer maxHealth = 5; //default placeholder value for health
+    Integer Health = maxHealth; 
+    HealthBar healthBar;
 
-    Integer Health = 500; //default placeholder value for health
+    Integer plunder = 10; //All ships start holding 10 plunder, even the playership
+    
     long shootingCooldown = 1000; // 1s cooldown
     long lastFiredTime;
     ArrayList<CannonBall> cannonBalls = new ArrayList<CannonBall>();
@@ -19,6 +23,12 @@ abstract class Ship extends DynamicObject {
         lastFiredTime = TimeUtils.millis(); //used to measure time between shots in milliseconds, initialised here for conditional statement in Fire()
     }
 
+    /** Fires a cannonball from the center of the ship towards a target
+     *  only if the time elapsed since the last shot is greater than shootingCooldown.
+     *  Cannonball is added to the same stage as the ship object that fires it
+     *  @param xCoord x target of the cannonball
+     *  @param yCoord y target of the cannonball
+     *  */ 
     public void Fire(Float xCoord, Float yCoord){
         if (TimeUtils.timeSinceMillis(lastFiredTime) > shootingCooldown){
             lastFiredTime = TimeUtils.millis();
@@ -28,10 +38,22 @@ abstract class Ship extends DynamicObject {
         }
     }
 
-    public void Hit(){
-        //Do something, remove health etc.
+    /**Takes 1 health of of the ship. 
+     * Checks if the health of the ship is less than 0, removing it from the stage if so
+     * @return Boolean representing if the ship has been destroyed by the attack
+     */
+    public Boolean Hit(){ 
         Health -= 1;
-        System.out.println("I have been hit" + Health);
+        if (Health <= 0){
+            explode();
+            return true; // If ship is destroyed, return any plunder it holds
+        }
+        return false; //If ship not destroyed, return no plunder
+    }
+
+    /** Performed on death. Removes object from stage and perform any additional code specified in the function*/
+    public void explode(){
+        remove();
     }
 
 }
