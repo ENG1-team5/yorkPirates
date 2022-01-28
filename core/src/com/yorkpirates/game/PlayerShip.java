@@ -9,10 +9,10 @@ public class PlayerShip extends Ship{
     Float maxSpeed = 3f;
     Float acceleration = 1f;
     Float turnSpeed = 2f;
+    Integer XP = 0;
 
     public PlayerShip(String imgName, Float xPos, Float yPos,String affiliation){
         super(imgName, xPos, yPos, affiliation);
-        
     }
 
     // Called each frame
@@ -51,7 +51,7 @@ public class PlayerShip extends Ship{
     }
 
     
-    public Integer Hit(){
+    public Boolean Hit(){
         return super.Hit();
     }
 }

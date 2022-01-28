@@ -6,6 +6,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
@@ -105,7 +106,6 @@ public class YorkPirates extends ApplicationAdapter {
 		pHealthBar.scaleBy(1.5f);
 		pHealthBar.setX(15);
 		pHealthBar.setY(Gdx.graphics.getHeight()-35);
-
 	}
 
 	// Render is ran every frame of the game
@@ -137,7 +137,10 @@ public class YorkPirates extends ApplicationAdapter {
 				font.draw(uiBatch, college.affiliation + " : health = " + (int)((college.Health/college.maxHealth)*100) + "%", originalScreenSize.x - 200, originalScreenSize.y -(40 * (i+1))); //Scales vetically with i
 			}
 		}
-		font.draw(uiBatch,"Plunder = " + pShip.plunder,25, 25); //Plunder counter in roughly the center of screen
+		font.draw(uiBatch, " x " + pShip.XP, originalScreenSize.x -100, 35);
+		uiBatch.draw(new Texture("CannonBall.png"), originalScreenSize.x -130,15);
+		font.draw(uiBatch," x " + pShip.plunder,60, 35); //Plunder counter in roughly the center of screen
+		uiBatch.draw(new Texture("CannonBall.png"),25,15);
 		pHealthBar.draw(uiBatch, 0); // Draws the player health bar
 		uiBatch.end();
 	}

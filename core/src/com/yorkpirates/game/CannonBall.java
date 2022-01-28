@@ -47,7 +47,11 @@ public class CannonBall extends DynamicObject{
                     if(actors.get(i) instanceof EnemyShip){
                         EnemyShip eShip = (EnemyShip) actors.get(i);
                         if (collisionBox.overlaps(eShip.collisionBox)){
-                            ((PlayerShip) owner).plunder += eShip.Hit();
+                            Boolean hasDestroyed = eShip.Hit();
+                            if (hasDestroyed){
+                                ((PlayerShip) owner).plunder += eShip.plunder;
+                                ((PlayerShip) owner).XP += eShip.XPVALUE;
+                            }
                             explode();
                         }
                     }
@@ -56,7 +60,11 @@ public class CannonBall extends DynamicObject{
                         College college = (College) actors.get(i);
                         if (!college.affiliation.equals(((PlayerShip)owner).affiliation)){ //Makes it so players cannot friendly fire their own colleges.
                             if (collisionBox.overlaps(college.collisionBox)){
-                                ((PlayerShip) owner).plunder += college.Hit(((PlayerShip)owner).affiliation);
+                                Boolean hasDestroyed = college.Hit(((PlayerShip)owner).affiliation);
+                                if (hasDestroyed){
+                                    ((PlayerShip) owner).plunder += college.plunder;
+                                    ((PlayerShip) owner).XP += college.XPVALUE;
+                                }
                                 explode();
                             }
                         }

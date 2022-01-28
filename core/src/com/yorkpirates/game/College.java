@@ -17,6 +17,7 @@ class College extends StaticObject{
     float healthBarBuffer = 30f; //How high above the ship the health bar floats
 
     Integer plunder = 50; // Worth 50 by default
+    Integer XPVALUE = 250; // Set value of XP, when player destroys it, it gains this much XP
 
     String affiliation; //Name of college
     Circle attackRange; //Invisible attack range, where the college will shoot at the player if they enter 
@@ -68,7 +69,7 @@ class College extends StaticObject{
         }
     }
 
-    public Integer Hit(String newAffiliation){
+    public Boolean Hit(String newAffiliation){
         //Do something, remove health etc.
         if (Health == maxHealth){ //If this is the first hit taken, spawn a health bar above the ship
             healthBar = new HealthBar(this);
@@ -80,8 +81,8 @@ class College extends StaticObject{
             this.affiliation = newAffiliation; 
             Health = maxHealth;
             healthBar.remove();
-            return plunder; //If college destroyed, return its plunder to its killer
+            return true; //If college destroyed, return true to indicate college has been destroyed
         }
-        return 0; // If college not destroyed, return 0 plunder
+        return false; // If college not destroyed, return false, to indicate college has not been destroyed
     }
 }

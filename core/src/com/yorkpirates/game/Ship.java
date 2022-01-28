@@ -32,13 +32,13 @@ abstract class Ship extends DynamicObject {
         }
     }
 
-    public Integer Hit(){ 
+    public Boolean Hit(){ 
         Health -= 1;
         if (Health <= 0){
             explode();
-            return plunder; // If ship is destroyed, return any plunder it holds
+            return true; // If ship is destroyed, return any plunder it holds
         }
-        return 0; //If ship not destroyed, return no plunder
+        return false; //If ship not destroyed, return no plunder
     }
 
     public void explode(){

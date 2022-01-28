@@ -46,7 +46,6 @@ public class HealthBar extends Actor{
             MaxHealth = ((Ship)owner).maxHealth;
         }
         
-
         batch.setColor(determineColor(Health,MaxHealth)); //Works out the tint that needs to be applyed to the sprites that make up healthBar
         batch.draw(fgSprite, getX(), getY(), getOriginX(), getOriginY(), (fgSprite.getRegionWidth()/(MaxHealth/Health)), fgSprite.getRegionHeight(), getScaleX(), getScaleY(), getRotation());
         batch.draw(bgSprite, getX(), getY(), getOriginX(), getOriginY(), bgSprite.getRegionWidth(), bgSprite.getRegionHeight(), getScaleX(), getScaleY(), getRotation());
