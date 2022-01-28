@@ -4,12 +4,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.PolygonBatch;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
@@ -17,9 +11,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -103,23 +95,6 @@ public class YorkPirates extends ApplicationAdapter {
 
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
-		
-		PolygonSpriteBatch pb = new PolygonSpriteBatch();
-		pb.begin();
-		
-		Pixmap pix = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-		pix.setColor(0xFF0000FF); // DE is red, AD is green and BE is blue.
-		pix.fill();
-		Texture textureSolid = new Texture(pix);
-
-		for (Actor actor : stage.getActors()) {
-			Polygon cb = ((StaticObject) actor).collisionBox;
-			PolygonRegion r = new PolygonRegion(new TextureRegion(textureSolid), cb.getTransformedVertices(), new short[] {0, 1, 2, 0, 2, 3 });
-			PolygonSprite poly = new PolygonSprite(r);
-
-			poly.draw(pb);
-		}
-		pb.end();
 
 		stage.act(Gdx.graphics.getDeltaTime()); // Runs the act function for all objects in stage, passes in amount of time since last frame
 		stage.draw();
