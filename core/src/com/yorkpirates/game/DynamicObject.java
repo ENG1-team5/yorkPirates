@@ -1,15 +1,18 @@
 package com.yorkpirates.game;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
-
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
 abstract class DynamicObject extends StaticObject{
     Float speed = 0f;
-    Boolean collisionFlag = F
+    Boolean collisionFlag = false;
+
+    private float oldX;
+    private float oldY;
+    private float oldoldX;
+    private float oldoldY;
 
     public DynamicObject(String imgName, Float xPos, Float yPos){
         super(imgName, xPos, yPos);
@@ -24,40 +27,55 @@ abstract class DynamicObject extends StaticObject{
     public void act(float delta){
         super.act(delta);
 
-        float oldX = getX();
-        float oldY = getY();
+        oldoldX = oldX;
+        oldoldY = oldY;
+        
+        oldX = getX();
+        oldY = getY();
 
         float newX = oldX + MathUtils.cosDeg(getRotation()) * speed;
         float newY = oldY + MathUtils.sinDeg(getRotation()) * speed;
 
-        if (checkActorCollisions()) {
-            speed = 0f;
-        }
-
         setX(newX);
         setY(newY);
+
+        // If we collide, don't move into the object we hit
+        if (checkActorCollisions()) {
+            speed = 0f;
+            // oldold used to avoid clipping into the impacted object
+            // Causes a slight bounce effect at high speeds
+            // I think it looks cool so I'm not bothered
+            setX(oldoldX); setY(oldoldY);
+        }
     }
 
-    public Boolean checkActorCollisions() {
+    public boolean checkActorCollisions() {
+        /**
+         * Check if this actor is colliding with any other actors or is out of bounds
+         * @returns: true if actor is colliding, false otherwise
+         */
 
-        if (getX() < 0 || getStage().getHeight() < getX()) {
-            return false;
+        // Future: replace these with the cloud tiles
+        if (getX() < 0 || getStage().getWidth() < getX()) {
+            return true;
         }
         if (getY() < 0 || getStage().getHeight() < getY()) {
-            return false;
+            return true;
         }
 
         Array<Actor> actors = getStage().getActors();
 
         for (Actor actor : actors) {
+            if (actor.equals(this) || actor instanceof CannonBall) {
+                continue;
+            }
             if (actor instanceof StaticObject) {
                 StaticObject x = (StaticObject)actor;
-                if (x.collisionBox.overlaps(this.collisionBox)) {
-                    return false;
+                if (Intersector.overlapConvexPolygons(x.collisionBox, this.collisionBox)) {
+                    return true;
                 }
             }
         }
-
-        return true;
+        return false;
     }
 }

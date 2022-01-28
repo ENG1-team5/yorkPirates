@@ -1,5 +1,6 @@
 package com.yorkpirates.game;
 
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
@@ -46,7 +47,7 @@ public class CannonBall extends DynamicObject{
                 // Bullet is owned by player and has hit EnemyShip
                 if(actors.get(i) instanceof EnemyShip){
                     EnemyShip eShip = (EnemyShip) actors.get(i);
-                    if (collisionBox.overlaps(eShip.collisionBox)){
+                    if ( Intersector.overlapConvexPolygons(collisionBox, eShip.collisionBox) ){
                         eShip.Hit();
                         explode();
                     }
@@ -54,7 +55,7 @@ public class CannonBall extends DynamicObject{
                 //Bullet is owned by player and hits college
                 if(actors.get(i) instanceof College){
                     College college = (College) actors.get(i);
-                    if (collisionBox.overlaps(college.collisionBox)){
+                    if (Intersector.overlapConvexPolygons(collisionBox, college.collisionBox)){
                         college.Hit();
                         explode();
                     }
@@ -64,7 +65,7 @@ public class CannonBall extends DynamicObject{
                 //Bullet is owned by EnemyShip and hits player
                 if(actors.get(i) instanceof PlayerShip){
                     PlayerShip pShip = (PlayerShip) actors.get(i);
-                    if (collisionBox.overlaps(pShip.collisionBox)){
+                    if (Intersector.overlapConvexPolygons(collisionBox, pShip.collisionBox)){
                         pShip.Hit();
                         explode();
                     }
@@ -75,7 +76,7 @@ public class CannonBall extends DynamicObject{
                 //Bullet fired by a college hits any ship 
                 if(actors.get(i) instanceof Ship){
                     Ship targetShip = (Ship) actors.get(i);
-                    if (collisionBox.overlaps(targetShip.collisionBox)){
+                    if (Intersector.overlapConvexPolygons(collisionBox, targetShip.collisionBox)){
                         if (targetShip.affiliation != ((College)owner).affiliation){ // This makes it so cannonballs fired by a college pass over friendly ships, could be changed
                             targetShip.Hit();
                             explode();
@@ -85,4 +86,7 @@ public class CannonBall extends DynamicObject{
             }  
         }
     }
+
+    @Override
+    public boolean checkActorCollisions() { return false; }
 }
