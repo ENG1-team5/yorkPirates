@@ -2,12 +2,15 @@ package com.yorkpirates.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 class College extends StaticObject{
 
@@ -92,6 +95,7 @@ class College extends StaticObject{
         Health -= 1;
         if(Health <= 0){
             this.affiliation = newAffiliation; 
+            sprite = new Sprite(new Texture(Gdx.files.internal(affiliation + "_college.png"))) ;
             Health = maxHealth;
             healthBar.remove();
             return true; //If college destroyed, return true to indicate college has been destroyed
