@@ -142,7 +142,8 @@ public class YorkPirates extends ApplicationAdapter {
 				font.draw(uiBatch, college.affiliation + " : health = " + (int)((college.Health/college.maxHealth)*100) + "%", originalScreenSize.x - 200, (originalScreenSize.y - 20) -(20 * (i+1))); //Scales vetically with i
 			}
 		}
-		font.draw(uiBatch, " x " + pShip.XP, originalScreenSize.x -100, 35);
+		// Ui rendering
+		font.draw(uiBatch, " x " + ((int)Math.floor(pShip.XP)), originalScreenSize.x -100, 35);
 		uiBatch.draw(new Texture("XP.png"), originalScreenSize.x -130,15);
 		font.draw(uiBatch," x " + pShip.plunder,60, 35); //Plunder counter in roughly the center of screen
 		uiBatch.draw(new Texture("coin.png"),25,15);

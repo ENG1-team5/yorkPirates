@@ -9,7 +9,7 @@ public class PlayerShip extends Ship{
     Float maxSpeed = 3f;
     Float acceleration = 1f;
     Float turnSpeed = 2f;
-    Integer XP = 0;
+    Float XP = 0f;
 
     public PlayerShip(String imgName, Float xPos, Float yPos,  String affiliation){
         super(imgName, xPos, yPos, affiliation);
@@ -48,6 +48,9 @@ public class PlayerShip extends Ship{
             Vector3 target = getStage().getCamera().unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0));
             Fire(target.x, target.y);
         }
+
+        //Add a small amount of XP over time
+        XP += 0.005f;
     }
 
     /**
