@@ -62,7 +62,6 @@ class College extends StaticObject{
             healthBar.setX(getX() + offsetToCenter);
             healthBar.setY(getY() + getHeight() + healthBarBuffer);
         }
-        
     }
 
     /** Fires a cannonball from the center of the college towards a target

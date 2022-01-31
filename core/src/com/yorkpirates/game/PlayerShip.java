@@ -11,7 +11,7 @@ public class PlayerShip extends Ship{
     Float turnSpeed = 2f;
     Float XP = 0f;
 
-    public PlayerShip(String imgName, Float xPos, Float yPos,String affiliation){
+    public PlayerShip(String imgName, Float xPos, Float yPos,  String affiliation){
         super(imgName, xPos, yPos, affiliation);
     }
 
