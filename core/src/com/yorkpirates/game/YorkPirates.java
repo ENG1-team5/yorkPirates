@@ -77,7 +77,7 @@ public class YorkPirates extends ApplicationAdapter {
 		// Add player ship
 		// Seperate as a player ship must be spawned for the camera to work
 		RectangleMapObject spawn = (RectangleMapObject)spawns.getObjects().get("player_spawn");
-		pShip = new PlayerShip("james_ship.png", spawn.getRectangle().x, spawn.getRectangle().y, "James");
+		pShip = new PlayerShip("james_ship.png", spawn.getRectangle().x, spawn.getRectangle().y, "james");
 		stage.addActor(pShip);
 		stage.setKeyboardFocus(pShip);
 		
@@ -119,7 +119,7 @@ public class YorkPirates extends ApplicationAdapter {
 		camera.position.set(pShip.getX(), pShip.getY(), 16f);
 		camera.update();
 
-		ScreenUtils.clear(0.5f, 0.5f, 0.5f, 1); // Sets background to white
+		ScreenUtils.clear(1f, 1f, 1f, 1); // Sets background to white
 
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
@@ -139,7 +139,7 @@ public class YorkPirates extends ApplicationAdapter {
 				College college = colleges.get(i);
 				if (college.affiliation == pShip.affiliation){colleges.remove(i);} // If college is freindly, remove it from the list
 				// Places a health percentage for each college in a vertical list
-				font.draw(uiBatch, college.affiliation + " : health = " + (int)((college.Health/college.maxHealth)*100) + "%", originalScreenSize.x - 200, originalScreenSize.y -(40 * (i+1))); //Scales vetically with i
+				font.draw(uiBatch, college.affiliation + " : health = " + (int)((college.Health/college.maxHealth)*100) + "%", originalScreenSize.x - 200, (originalScreenSize.y - 20) -(20 * (i+1))); //Scales vetically with i
 			}
 		}
 		// Ui rendering
