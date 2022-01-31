@@ -32,7 +32,7 @@ abstract class StaticObject extends Actor{
         collisionBox.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
     }
 
-    // Redraws the object every frame, I think.
+    // Redraws the object every frame
     @Override
     public void draw(Batch batch, float parentAlpha){
         batch.draw(sprite, getX(), getY(), getOriginX(), getOriginY(), sprite.getRegionWidth(), sprite.getRegionHeight(), getScaleX(), getScaleY(), getRotation());

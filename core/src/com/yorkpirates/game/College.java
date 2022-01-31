@@ -47,7 +47,8 @@ class College extends StaticObject{
                 
             if (actors.get(i) instanceof Ship){ // If the actor is a ship
                 Ship targetShip = (Ship) actors.get(i); 
-                if (new Vector2(targetShip.getX(), targetShip.getY()).dst(new Vector2(getX(), getY())) < attackRadius){
+                //Measures distance from center of the college to the ship, if it is less than the attack radius, fire at it
+                if (new Vector2(targetShip.getX(), targetShip.getY()).dst(new Vector2(getX()+((int)(getWidth()/2)), getY()+((int)(getHeight()/2)))) < attackRadius){
                     if (!this.affiliation.equals(targetShip.affiliation)){ // Check if the ship is an enemy of the college, i.e. not the same affiliations
                         Fire(targetShip.getX(),targetShip.getY());
                     }
