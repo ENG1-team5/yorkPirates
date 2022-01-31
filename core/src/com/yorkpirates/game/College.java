@@ -58,7 +58,6 @@ class College extends StaticObject{
             healthBar.setX(getX() + offsetToCenter);
             healthBar.setY(getY() + getHeight() + healthBarBuffer);
         }
-        
     }
 
     /** Fires a cannonball from the center of the college towards a target
@@ -90,7 +89,7 @@ class College extends StaticObject{
         }
         Health -= 1;
         if(Health <= 0){
-            this.affiliation = newAffiliation; 
+            this.affiliation = newAffiliation;
             Health = maxHealth;
             healthBar.remove();
             return true; //If college destroyed, return true to indicate college has been destroyed

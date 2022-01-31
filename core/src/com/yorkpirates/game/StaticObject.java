@@ -4,12 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.CpuSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
 
 abstract class StaticObject extends Actor{
     Sprite sprite;
@@ -21,8 +18,6 @@ abstract class StaticObject extends Actor{
         setBounds(sprite.getWidth(), sprite.getHeight(), sprite.getWidth(), sprite.getHeight()); // v important
         setX(xPos);
         setY(yPos);
-
-        setDebug(true);
 
         collisionBox = new Polygon(new float[]{0, 0, sprite.getWidth(), 0, sprite.getWidth(), sprite.getHeight(), 0, sprite.getHeight()});
         collisionBox.setPosition(sprite.getX(), sprite.getY());
