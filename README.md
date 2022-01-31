@@ -20,4 +20,10 @@
 
     `gradlew.bat desktop:run`
 
-5. Commit and push your changes. I reccomend using VSCode or some other git assistan
+5. Commit and push your changes. I reccomend using VSCode or some other git assistant
+
+# Creating an executable jar file
+
+1. execute `gradlew.bat dist`
+
+2. Locate file in desktop/build/libs/desktop-1.0.jar

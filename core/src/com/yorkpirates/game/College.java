@@ -78,7 +78,7 @@ class College extends StaticObject{
     /** Removes 1 health from the college and spawning a healthbar upon being hit for the first time, 
      *  changing its affiliation to its attacker's college if it's health drops below 0.
      *  This function invoked by CannonBall class in its collision detection loop
-     *  @param newAffiliation The attackers affiliation string e.g "Goodricke"
+     *  @param newAffiliation The attackers affiliation string e.g "goodricke"
      *  @return Boolean representing if college was destroyed in attack or not 
      */
     public Boolean Hit(String newAffiliation){

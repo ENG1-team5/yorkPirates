@@ -117,73 +117,73 @@
   </object>
   <object id="12" name="enemy_spawn" x="1480" y="1516.67">
    <properties>
-    <property name="affiliation" value="Constantine"/>
+    <property name="affiliation" value="constantine"/>
    </properties>
    <point/>
   </object>
   <object id="13" name="enemy_spawn" x="1100.67" y="1168.67">
    <properties>
-    <property name="affiliation" value="Constantine"/>
+    <property name="affiliation" value="constantine"/>
    </properties>
    <point/>
   </object>
   <object id="15" name="college_spawn" x="389.333" y="1250.67">
    <properties>
-    <property name="affiliation" value="James"/>
+    <property name="affiliation" value="james"/>
    </properties>
    <point/>
   </object>
   <object id="16" name="college_spawn" x="198" y="202">
    <properties>
-    <property name="affiliation" value="Goodricke"/>
+    <property name="affiliation" value="goodricke"/>
    </properties>
    <point/>
   </object>
   <object id="17" name="college_spawn" x="1328" y="304">
    <properties>
-    <property name="affiliation" value="Langwith"/>
+    <property name="affiliation" value="langwith"/>
    </properties>
    <point/>
   </object>
   <object id="18" name="college_spawn" x="1292.36" y="1334.55">
    <properties>
-    <property name="affiliation" value="Constantine"/>
+    <property name="affiliation" value="constantine"/>
    </properties>
    <point/>
   </object>
   <object id="19" name="enemy_spawn" x="1503.33" y="476">
    <properties>
-    <property name="affiliation" value="Langwith"/>
+    <property name="affiliation" value="langwith"/>
    </properties>
    <point/>
   </object>
   <object id="20" name="enemy_spawn" x="1136" y="184">
    <properties>
-    <property name="affiliation" value="Langwith"/>
+    <property name="affiliation" value="langwith"/>
    </properties>
    <point/>
   </object>
   <object id="21" name="enemy_spawn" x="1503.33" y="176">
    <properties>
-    <property name="affiliation" value="Langwith"/>
+    <property name="affiliation" value="langwith"/>
    </properties>
    <point/>
   </object>
   <object id="22" name="enemy_spawn" x="1152" y="448">
    <properties>
-    <property name="affiliation" value="Langwith"/>
+    <property name="affiliation" value="langwith"/>
    </properties>
    <point/>
   </object>
   <object id="23" name="enemy_spawn" x="106" y="118">
    <properties>
-    <property name="affiliation" value="Goodricke"/>
+    <property name="affiliation" value="goodricke"/>
    </properties>
    <point/>
   </object>
   <object id="24" name="enemy_spawn" x="302.667" y="301.333">
    <properties>
-    <property name="affiliation" value="Goodricke"/>
+    <property name="affiliation" value="goodricke"/>
    </properties>
    <point/>
   </object>
