@@ -2,12 +2,15 @@ package com.yorkpirates.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 class College extends StaticObject{
 
@@ -47,7 +50,8 @@ class College extends StaticObject{
                 
             if (actors.get(i) instanceof Ship){ // If the actor is a ship
                 Ship targetShip = (Ship) actors.get(i); 
-                if (new Vector2(targetShip.getX(), targetShip.getY()).dst(new Vector2(getX(), getY())) < attackRadius){
+                //Measures distance from center of the college to the ship, if it is less than the attack radius, fire at it
+                if (new Vector2(targetShip.getX(), targetShip.getY()).dst(new Vector2(getX()+((int)(getWidth()/2)), getY()+((int)(getHeight()/2)))) < attackRadius){
                     if (!this.affiliation.equals(targetShip.affiliation)){ // Check if the ship is an enemy of the college, i.e. not the same affiliations
                         Fire(targetShip.getX(),targetShip.getY());
                     }
@@ -89,7 +93,8 @@ class College extends StaticObject{
         }
         Health -= 1;
         if(Health <= 0){
-            this.affiliation = newAffiliation;
+            this.affiliation = newAffiliation; 
+            sprite = new Sprite(new Texture(Gdx.files.internal(affiliation + "_college.png"))) ;
             Health = maxHealth;
             healthBar.remove();
             return true; //If college destroyed, return true to indicate college has been destroyed
